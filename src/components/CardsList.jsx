@@ -7,9 +7,15 @@ class CardsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true,
+            isLoaded: false,
             films: []
         }
+    }
+
+    toggleLoad(event) {
+        this.setState(prevState => ({
+            isLoaded: !prevState.isLoaded
+        }));
     }
 
     componentDidMount() {
@@ -18,14 +24,14 @@ class CardsList extends React.Component {
             .then(object => {
                 let films = object.map((film, id) => {
                     return (
-                        <Cards 
-                        key={id}
-                        title={film.title} 
-                        description={film.description} 
-                        release_date={film.release_date} 
-                        rt_score={film.rt_score} 
-                        director={film.director} 
-                        producer={film.producer} />
+                        <Cards
+                            key={id}
+                            title={film.title}
+                            description={film.description}
+                            release_date={film.release_date}
+                            rt_score={film.rt_score}
+                            director={film.director}
+                            producer={film.producer} />
                     )
                 })
                 this.setState({ films: films })
@@ -34,9 +40,24 @@ class CardsList extends React.Component {
     }
 
     render() {
-        return (
-            <div className="row">{this.state.films}></div>
-        )
+        if (this.state.isLoaded === true) {
+            return (
+                <React.Fragment>
+                    <button
+                        type="button"
+                        className="btn btn-primary btn-lg mb-4"
+                        onClick={(event) => { this.toggleLoad(event) }}>Unload Films</button>
+                    <div className="row">{this.state.films}></div>
+                </React.Fragment>
+            )
+        } else {
+            return (
+                <button
+                    type="button"
+                    className="btn btn-primary btn-lg mb-4"
+                    onClick={(event) => { this.toggleLoad(event) }}>Load Films</button>
+            )
+        }
     }
 }
 
