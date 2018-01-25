@@ -6,14 +6,21 @@ const PeopleCards = (props) => {
             <div className="card mb-5">
                 <img className="card-img-top" src={require("../characters.jpg")} alt="Card cap" />
                 <div className="card-body">
-                    <h5 className="card-title">{props.name}</h5>
-                    <h6 className="card-subtitle mb-2 text-muted">Age: {props.age} | Gender: {props.gender}</h6>
-                    <h6 className="card-subtitle mb-2 text-muted">Hair Color: {props.hair_color} | Eye Color: {props.eye_color}</h6>
-                    <a href={"http://ghibliapi.herokuapp.com/people/" + props.link} target="_blank" class="btn btn-primary">Go to their JSON</a>
+                    <h5 className="card-header">{props.name}</h5>
+                    <ul className="list-group list-group-flush">
+                        <li className="list-group-item">Age: {props.age}</li>
+                        <li className="list-group-item">Gender: {props.gender}</li>
+                        <li className="list-group-item">Hair Color: {props.hair_color}</li>
+                        <li className="list-group-item">Eye Color: {props.eye_color}</li>
+                        <li className="list-group-item text-center"><a href={"http://ghibliapi.herokuapp.com/people/" + props.link} target="_blank" className="btn btn-secondary mt-2">Go to their JSON</a></li>
+                    </ul>
                 </div>
+
             </div>
         </div>
     )
 }
 
 export default PeopleCards;
+
+

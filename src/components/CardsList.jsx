@@ -27,34 +27,40 @@ class CardsList extends React.Component {
         if (this.state.pageLoaded === false) {
             return (
                 <React.Fragment>
-                    <button
-                        type="button"
-                        className="btn btn-primary btn-lg mb-4 mr-5 ml-5"
-                        onClick={(event) => { this.toggleFilmsLoad(event) }}>Load Films</button>
-                    <button
-                        type="button"
-                        className="btn btn-primary btn-lg mb-4 mr-5 ml-5"
-                        onClick={(event) => { this.togglePeople(event) }}>Load People</button>
+                    <div className="row justify-content-center">
+                        <button
+                            type="button"
+                            className="btn btn-primary btn-lg mb-4 mr-5"
+                            onClick={(event) => { this.toggleFilmsLoad(event) }}>Load Films</button>
+                        <button
+                            type="button"
+                            className="btn btn-primary btn-lg mb-4 ml-5"
+                            onClick={(event) => { this.togglePeople(event) }}>Load People</button>
+                    </div>
                 </React.Fragment>
             )
         } else if (this.state.filmsLoaded === true) {
             return (
                 <React.Fragment>
-                    <button
-                        type="button"
-                        className="btn btn-primary btn-lg mb-4 mr-5 ml-5"
-                        onClick={(event) => { this.togglePeople(event) }}>Load People</button>
-                    <FilmCardsList />
+                    <div className="row justify-content-center">
+                        <button
+                            type="button"
+                            className="btn btn-primary btn-lg mb-4 mr-5 ml-5"
+                            onClick={(event) => { this.togglePeople(event) }}>Load People</button>
+                        <FilmCardsList />
+                    </div>
                 </React.Fragment>
             )
         } else if (this.state.peopleLoaded === true) {
             return (
                 <React.Fragment>
-                    <button
-                        type="button"
-                        className="btn btn-primary btn-lg mb-4 mr-5 ml-5"
-                        onClick={(event) => { this.toggleFilmsLoad(event) }}>Load Films</button>
-                    <PeopleCardsList />
+                    <div className="row justify-content-center">
+                        <button
+                            type="button"
+                            className="btn btn-primary btn-lg mb-4 mr-5 ml-5"
+                            onClick={(event) => { this.toggleFilmsLoad(event) }}>Load Films</button>
+                        <PeopleCardsList />
+                    </div>
                 </React.Fragment>
             )
         }
