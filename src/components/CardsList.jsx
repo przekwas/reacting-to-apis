@@ -1,5 +1,6 @@
 import React from 'react';
-import Cards from './Cards';
+import FilmCardsList from './FilmCardsList';
+import PeopleCardsList from './PeopleCardsList';
 import 'isomorphic-fetch';
 import 'es6-promise';
 
@@ -7,58 +8,58 @@ class CardsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoaded: false,
-            films: []
+            pageLoaded: false,
+            filmsLoaded: false,
+            peopleLoaded: false
         }
     }
 
-    toggleLoad(event) {
-        this.setState(prevState => ({
-            isLoaded: !prevState.isLoaded
-        }));
+    toggleFilmsLoad(event) {
+        this.setState({ pageLoaded: true, filmsLoaded: true, peopleLoaded: false })
     }
 
-    componentDidMount() {
-        fetch("http://ghibliapi.herokuapp.com/films")
-            .then(response => response.json())
-            .then(object => {
-                let films = object.map((film, id) => {
-                    return (
-                        <Cards
-                            key={id}
-                            title={film.title}
-                            description={film.description}
-                            release_date={film.release_date}
-                            rt_score={film.rt_score}
-                            director={film.director}
-                            producer={film.producer} />
-                    )
-                })
-                this.setState({ films: films })
-            })
-            .catch(error => console.log(error));
+    togglePeople(event) {
+        this.setState({ pageLoaded: true, filmsLoaded: false, peopleLoaded: true })
     }
 
     render() {
-        if (this.state.isLoaded === true) {
+
+        if (this.state.pageLoaded === false) {
             return (
                 <React.Fragment>
                     <button
                         type="button"
-                        className="btn btn-primary btn-lg mb-4"
-                        onClick={(event) => { this.toggleLoad(event) }}>Unload Films</button>
-                    <div className="row">{this.state.films}></div>
+                        className="btn btn-primary btn-lg mb-4 mr-5 ml-5"
+                        onClick={(event) => { this.toggleFilmsLoad(event) }}>Load Films</button>
+                    <button
+                        type="button"
+                        className="btn btn-primary btn-lg mb-4 mr-5 ml-5"
+                        onClick={(event) => { this.togglePeople(event) }}>Load People</button>
                 </React.Fragment>
             )
-        } else {
+        } else if (this.state.filmsLoaded === true) {
             return (
-                <button
-                    type="button"
-                    className="btn btn-primary btn-lg mb-4"
-                    onClick={(event) => { this.toggleLoad(event) }}>Load Films</button>
+                <React.Fragment>
+                    <button
+                        type="button"
+                        className="btn btn-primary btn-lg mb-4 mr-5 ml-5"
+                        onClick={(event) => { this.togglePeople(event) }}>Load People</button>
+                    <FilmCardsList />
+                </React.Fragment>
+            )
+        } else if (this.state.peopleLoaded === true) {
+            return (
+                <React.Fragment>
+                    <button
+                        type="button"
+                        className="btn btn-primary btn-lg mb-4 mr-5 ml-5"
+                        onClick={(event) => { this.toggleFilmsLoad(event) }}>Load Films</button>
+                    <PeopleCardsList />
+                </React.Fragment>
             )
         }
     }
 }
 
 export default CardsList;
+
